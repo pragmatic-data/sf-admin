@@ -1,0 +1,13 @@
+version: 2
+
+models:
+  - name: TEST_CREATE_WAREHOUSE
+    tests:
+      - dbt_utils.expression_is_true:
+          expression: "CONTAINS(UPPER(result), UPPER(validate_wh_name_creation))"      
+      - dbt_utils.expression_is_true:
+          expression: "CONTAINS(UPPER(result), UPPER(validate_wh_name_grant))"      
+      - dbt_utils.expression_is_true:
+          expression: "CONTAINS(UPPER(result), UPPER(validate_owner_role))"      
+      - dbt_utils.expression_is_true:
+          expression: "CONTAINS(UPPER(result), UPPER(validate_creator_role))"      
