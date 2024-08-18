@@ -1,15 +1,9 @@
-Welcome to your new dbt project!
+Welcome to the Snowflake Project Admin macro library!
 
-### Using the starter project
+### Snowflake Project Admin
+This is a lightweight, opinionated package to quickly set up new dbt projects.
 
-Try running the following commands:
-- dbt run
-- dbt test
+At the core it is built by a small set of macros that apply an opinionated 
+role structure using a consistent naming strategy that makes easy to understand
+what role does what inside one project and across projects.
 
-
-### Resources:
-- Learn more about dbt [in the docs](https://docs.getdbt.com/docs/introduction)
-- Check out [Discourse](https://discourse.getdbt.com/) for commonly asked questions and answers
-- Join the [dbt community](https://getdbt.com/community) to learn from other analytics engineers
-- Find [dbt events](https://events.getdbt.com) near you
-- Check out [the blog](https://blog.getdbt.com/) for the latest news on dbt's development and best practices
