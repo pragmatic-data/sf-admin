@@ -2,7 +2,7 @@ version: 2
 
 models:
   - name: TEST_CREATE_WAREHOUSE
-    tests:
+    data_tests:
       - dbt_utils.expression_is_true:
           expression: "CONTAINS(UPPER(result), UPPER(validate_wh_name_creation))"      
       - dbt_utils.expression_is_true:
