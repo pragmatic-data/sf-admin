@@ -37,10 +37,23 @@ clean-targets:         # directories to be removed by `dbt clean`
 
 ### VARIABLES
 vars:
-  sysadmin_root_role: SYSADMIN
-  useradmin_role: USERADMIN
+  useradmin_role: USERADMIN       
+  # useradmin_role - the role used to create roles and users - needs privilege to create the object
+  
+  creator_role: SYSADMIN          
+  # creator_role - the role used to create databases and warehouses - needs privilege to create the object
+  
+  owner_role: SYSADMIN            
+  # owner_role - the role who will get ownership of the created object - no privileges needed 
+  #            - usually the EXECUTOR role for the dbt user, so that it can create schemata & other objects inside
+  
   shared_dev_wh: SHARED_DEV_WH
+  # shared_dev_wh - the shared development warehouse to assign to developers in addition to the project warehouse
+  #                 The idea is that it is more cost efficient for many developers to share a single DEV WH
+  #                 than each DEV using the specific WH for the project she's working on at the moment.
+
   reporting_wh: REPORTING_WH
+  # reporting_wh - an example of extra warehouse
 
 
 models:
