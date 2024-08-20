@@ -24,3 +24,14 @@
 {% do return(sf_project_admin.get_role_name(prj_name, env_name, suffix)) %}
 {%- endmacro %}
 
+-------------------------------------------------------------
+
+{% macro get_default_org_role_names(prj_name) -%}
+
+    {% set executor_role_name = prj_name ~ '_DBT_EXECUTOR_ROLE' %}
+    {% set developer_role_name = prj_name ~ '_DEVELOPER' %}
+    {% set reader_role_name = prj_name ~ '_READER' %}
+
+    {% do return( (executor_role_name, developer_role_name, reader_role_name) ) %}
+
+{%- endmacro %}

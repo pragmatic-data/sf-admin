@@ -44,6 +44,9 @@ vars:
   reporting_wh: TEST_REPORTING_WH
   # reporting_wh - an example of extra warehouse
 
+  dev_env_names: ['DEV', 'XDEV']
+  # dev_env_names - a list of environment to be considered at "DEVELOPMENT" level, where DEVELOPER role have read/write privileges
+  #                 In "NON DEVELOPMENT" environments the DEVELOPER role has only read privileges
 
 
 # Configuring models - Full documentation: https://docs.getdbt.com/docs/configuring-models

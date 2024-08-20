@@ -9,7 +9,7 @@ use_case_01 as (
     '{{creator_role}}' as creator_role,     
     '{{useradmin_role}}' as useradmin_role,     
     '{{single_WH}}' as single_WH,     
-    '{{ sf_project_admin.create_environment(prj_name, env_name, owner_role, creator_role, single_WH) |e }}' as result,
+    '{{ sf_project_admin.create_environment(prj_name, env_name, owner_role, creator_role, useradmin_role, single_WH) |e }}' as result,
 
     'CREATE DATABASE IF NOT EXISTS SAMPLE_XDEV;' as validate_env_db_creation,
     'CREATE ROLE IF NOT EXISTS SAMPLE_XDEV_RW' as validate_env_RW_role_creation,

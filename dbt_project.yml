@@ -55,6 +55,10 @@ vars:
   reporting_wh: REPORTING_WH
   # reporting_wh - an example of extra warehouse
 
+  dev_env_names: ['DEV']
+  # dev_env_names - a list of environment to be considered at "DEVELOPMENT" level, where DEVELOPER role have read/write privileges
+  #                 In "NON DEVELOPMENT" environments the DEVELOPER role has only read privileges
+
 
 models:
   sf_project_admin:

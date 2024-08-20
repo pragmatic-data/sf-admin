@@ -11,9 +11,10 @@
     {%- set prj_name = 'SAMPLE' -%}
     {%- set environments = ['XDEV', 'XQA', 'XPROD'] -%}
 
-    {# --- OPTIONAL CONFIGS --- #}
+    {# --- OPTIONAL CONFIGS to override variables from dbt_project.yml --- #}
     {%- set owner_role = 'SOME_OWNER' -%}
     {%- set creator_role = 'SOME_CREATOR' -%}
+    {%- set useradmin_role = 'SOME_USERADMIN' -%}
 
     /* == Create ONE WAREHOUSE for all envs => pass NO env name == */
     {#{ sf_project_admin.create_warehouse(prj_name, env_name, owner_role, creator_role) }#}
@@ -21,12 +22,12 @@
 
     /* == Create ALL environments, one at a time == */
     {%- for env_name in environments %}
-    {{ sf_project_admin.create_environment(prj_name, env_name, owner_role, creator_role, single_WH = true) }}
+        {{ sf_project_admin.create_environment(prj_name, env_name, owner_role, creator_role, useradmin_role, single_WH = true) }}
     {%- endfor %}
 
 
     /* == Setup ORGANIZATIONAL ROLES == */
-    {{ sf_project_admin.create_default_org_roles(prj_name, environments) }}
+    {{ sf_project_admin.create_default_org_roles(prj_name, environments, owner_role, useradmin_role) }}
 
     /* == TO Create and Setup USERS => go to sample__user_lists and run refresh_user_roles___sample_project()  == */
 
