@@ -1,9 +1,21 @@
-{% macro create_environment( prj_name, sysadmin_root_role, env_name, single_WH = true ) -%}
+{% macro create_environment( 
+          prj_name
+        , env_name
+        , owner_role = none
+        , creator_role = none
+        , useradmin_role = none
+        , single_WH = true 
+    ) -%}
+
+{%- set owner_role = owner_role or var('owner_role', 'SYSADMIN') %}
+{%- set creator_role = creator_role or var('creator_role', 'SYSADMIN') %}
+{%- set useradmin_role = useradmin_role or var('useradmin_role', 'USERADMIN') %}
+
   {%- do log("*+  Creating environment for project " ~ prj_name ~ ", environment = " ~ env_name, info=True) -%}
 
-  {{ sf_project_admin.create_env_database(prj_name, sysadmin_root_role, env_name ) }}
+  {{ sf_project_admin.create_env_database(prj_name, env_name, owner_role, creator_role ) }}
 
-  {{ sf_project_admin.create_functional_roles(prj_name, sysadmin_root_role, env_name) }}
+  {{ sf_project_admin.create_functional_roles(prj_name, env_name, owner_role) }}
 
   {{ sf_project_admin.grants_to_writer_role(prj_name, env_name, single_WH) }}
 
@@ -22,11 +34,11 @@
 
 ----------------------------------------
 
-{% macro create_env_database(prj_name, sysadmin_root_role, env_name ) -%}
+{% macro create_env_database(prj_name, env_name, owner_role, creator_role ) -%}
   {%- do log("**  Creating database for project " ~ prj_name ~ ", environment = " ~ env_name, info=True) %}
 
   /* ---- create_env_database for {{env_name}} ---- */
-  USE ROLE SYSADMIN;
+  USE ROLE {{creator_role}};
 
   {%- set db_name = sf_project_admin.get_db_name(prj_name, env_name) %}
   
@@ -35,14 +47,14 @@
   {%- do log("**  Created database " ~ db_name ~ " for project " ~ prj_name ~ ", environment = " ~ env_name, info=True) %}
 
   /** 2 ** transfer ownership of DB to root SysAdmin role */
-  GRANT OWNERSHIP ON DATABASE {{db_name}} TO ROLE {{sysadmin_root_role}};
-  {%- do log("**  Assigned ownership of database " ~ db_name ~ " to role " ~ sysadmin_root_role , info=True) %}
+  GRANT OWNERSHIP ON DATABASE {{db_name}} TO ROLE {{owner_role}};
+  {%- do log("**  Assigned ownership of database " ~ db_name ~ " to role " ~ owner_role , info=True) %}
 
 {%- endmacro %}
 
 ----------------------------------------
 
-{% macro create_functional_roles(prj_name, sysadmin_root_role, env_name ) -%}
+{% macro create_functional_roles(prj_name, env_name, owner_role ) -%}
   {%- do log("**  Creating functional roles for project " ~ prj_name ~ ", environment = " ~ env_name, info=True) -%}
 
   /* ---- create_functional_roles for {{env_name}} ---- */
@@ -54,7 +66,7 @@
   {{ sf_project_admin.create_role( writer_role_name, 'Functional role to provide Read/Write access to the '~env_name~' db of the '~prj_name~' project' ) }}
 
     /** 1.1 Add WRITER role under root sysadmin */
-    GRANT ROLE {{writer_role_name}} TO ROLE {{sysadmin_root_role}};
+    GRANT ROLE {{writer_role_name}} TO ROLE {{owner_role}};
 
   {%- do log("**  Created and configured WRITER role for project " ~ prj_name ~ ", environment = " ~ env_name, info=True) %}
 

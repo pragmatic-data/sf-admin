@@ -1,0 +1,11 @@
+version: 2
+
+models:
+  - name: TEST_CREATE_ENV_DATABASE
+    data_tests:
+      - dbt_utils.expression_is_true:
+          expression: "CONTAINS(UPPER(result), UPPER(validate_env_db_creation))"      
+      - dbt_utils.expression_is_true:
+          expression: "CONTAINS(UPPER(result), UPPER(validate_owner_role))"      
+      - dbt_utils.expression_is_true:
+          expression: "CONTAINS(UPPER(result), UPPER(validate_creator_role))"      
