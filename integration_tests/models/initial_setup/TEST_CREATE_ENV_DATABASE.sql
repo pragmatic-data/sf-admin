@@ -11,7 +11,7 @@ use_case_01 as (
 
     'CREATE DATABASE IF NOT EXISTS SAMPLE_XDEV;' as validate_env_db_creation,
     'USE ROLE SOME_CREATOR;' as validate_creator_role,
-    'GRANT OWNERSHIP ON DATABASE SAMPLE_XDEV TO ROLE SOME_OWNER;' as validate_owner_role,    
+    'GRANT OWNERSHIP ON DATABASE SAMPLE_XDEV TO ROLE SOME_OWNER;' as validate_owner_role    
 )
 
 SELECT * FROM use_case_01

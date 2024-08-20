@@ -15,7 +15,7 @@
 
   {{ sf_project_admin.create_env_database(prj_name, env_name, owner_role, creator_role ) }}
 
-  {{ sf_project_admin.create_functional_roles(prj_name, env_name, owner_role) }}
+  {{ sf_project_admin.create_functional_roles(prj_name, env_name, owner_role, useradmin_role) }}
 
   {{ sf_project_admin.grants_to_writer_role(prj_name, env_name, single_WH) }}
 
@@ -24,12 +24,6 @@
   {% endif -%}
 
   {%- do log("*-  DONE with environment creation for project " ~ prj_name ~ ", environment = " ~ env_name, info=True) -%}
-{%- endmacro %}
-
-----------------------------------------
-
-{% macro get_db_name(prj_name, env_name) -%}
-{% do return(prj_name ~ '_' ~ env_name) %}
 {%- endmacro %}
 
 ----------------------------------------
@@ -54,27 +48,32 @@
 
 ----------------------------------------
 
-{% macro create_functional_roles(prj_name, env_name, owner_role ) -%}
-  {%- do log("**  Creating functional roles for project " ~ prj_name ~ ", environment = " ~ env_name, info=True) -%}
+{% macro create_functional_roles(prj_name, env_name, owner_role, useradmin_role ) -%}
 
-  /* ---- create_functional_roles for {{env_name}} ---- */
-  USE ROLE USERADMIN;
+/* ---- create_functional_roles for {{env_name}} ---- */
+{%- do log("**  Creating functional roles for project " ~ prj_name ~ ", environment = " ~ env_name, info=True) %}
 
-  /** 1 ** Create the WRITER role (DB wide) */
-  {%- set writer_role_name = sf_project_admin.get_writer_name(prj_name, env_name) %}
+    /** 1 ** Create the WRITER role (DB wide) and add it under the owner role */
+    {%- set writer_role_name = sf_project_admin.get_writer_name(prj_name, env_name) %}
 
-  {{ sf_project_admin.create_role( writer_role_name, 'Functional role to provide Read/Write access to the '~env_name~' db of the '~prj_name~' project' ) }}
+    {{ sf_project_admin.create_role( 
+        writer_role_name, 
+        'Functional role to provide Read/Write access to the '~env_name~' db of the '~prj_name~' project',
+        parent_role = owner_role,
+        useradmin_role = useradmin_role
+    ) }}
 
-    /** 1.1 Add WRITER role under root sysadmin */
-    GRANT ROLE {{writer_role_name}} TO ROLE {{owner_role}};
-
-  {%- do log("**  Created and configured WRITER role for project " ~ prj_name ~ ", environment = " ~ env_name, info=True) %}
-
+    {%- do log("**  Created and configured WRITER role for project " ~ prj_name ~ ", environment = " ~ env_name, info=True) %}
 
     /** 2 ** Create the READER role (DB wide) */
     {%- set reader_role_name = sf_project_admin.get_reader_name(prj_name, env_name) %}
 
-    {{ sf_project_admin.create_role( reader_role_name, 'Functional role to provide Read Only access to the '~env_name~' db of the '~prj_name~' project' ) }}
+    {{ sf_project_admin.create_role( 
+            reader_role_name,
+            'Functional role to provide Read Only access to the '~env_name~' db of the '~prj_name~' project',
+            parent_role = owner_role,
+            useradmin_role = useradmin_role
+        ) }}
 
     {%- do log("**  Created READER role for project " ~ prj_name ~ ", environment = " ~ env_name, info=True) %}
 

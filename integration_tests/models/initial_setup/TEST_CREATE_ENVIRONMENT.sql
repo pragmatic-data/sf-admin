@@ -17,7 +17,7 @@ use_case_01 as (
     'GRANT USAGE ON WAREHOUSE SAMPLE_WH' as validate_single_WH,
     'GRANT OWNERSHIP ON DATABASE SAMPLE_XDEV TO ROLE SOME_OWNER;' as validate_owner_role,
     'USE ROLE SOME_CREATOR;' as validate_creator_role,
-    'USE ROLE SOME_USERADMIN;' as validate_useradmin_role,
+    'USE ROLE SOME_USERADMIN;' as validate_useradmin_role
 )
 
 SELECT * FROM use_case_01
