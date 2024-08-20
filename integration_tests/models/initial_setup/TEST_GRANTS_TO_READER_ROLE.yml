@@ -1,0 +1,23 @@
+version: 2
+
+models:
+  - name: TEST_GRANTS_TO_READER_ROLE
+    data_tests:
+      - dbt_utils.expression_is_true:
+          expression: "CONTAINS(UPPER(result), UPPER(validate_owner_role))"      
+      - dbt_utils.expression_is_true:
+          expression: "CONTAINS(UPPER(result), UPPER(validate_usage_on_prj_wh))"      
+      - dbt_utils.expression_is_true:
+          expression: "CONTAINS(UPPER(result), UPPER(validate_usage_on_env_db))"      
+      - dbt_utils.expression_is_true:
+          expression: "CONTAINS(UPPER(result), UPPER(validate_usage_on_env_db_schemata))"      
+      - dbt_utils.expression_is_true:
+          expression: "CONTAINS(UPPER(result), UPPER(validate_usage_on_future_env_db_schemata))"      
+      - dbt_utils.expression_is_true:
+          expression: "CONTAINS(UPPER(result), UPPER(validate_usage_on_env_db_tables))"      
+      - dbt_utils.expression_is_true:
+          expression: "CONTAINS(UPPER(result), UPPER(validate_usage_on_future_env_db_tables))"      
+      - dbt_utils.expression_is_true:
+          expression: "CONTAINS(UPPER(result), UPPER(validate_usage_on_env_db_views))"      
+      - dbt_utils.expression_is_true:
+          expression: "CONTAINS(UPPER(result), UPPER(validate_usage_on_future_env_db_views))"      
