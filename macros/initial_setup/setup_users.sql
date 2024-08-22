@@ -1,36 +1,57 @@
-{% macro setup_users(prj_name, users_dict) -%}
+{% macro setup_users(
+    prj_name, 
+    users_dict, 
+    useradmin_role = none,
+    default_wh_name = none,
+    default_db_name = none
+) -%}
+    /** Set defaults if params not passed */ 
+    {% set useradmin_role = useradmin_role or var('useradmin_role', 'USERADMIN') %}
+    {% set default_wh_name = default_wh_name or sf_project_admin.get_warehouse_name(prj_name) %}
+    {% set default_db_name = default_db_name or sf_project_admin.get_db_name(prj_name, var('dev_env_names', ['DEV'])[0]) %}
+        
+    /** Collect inputs for specific calls */ 
+    {%- set (executor_role_name, developer_role_name, reader_role_name) 
+                = sf_project_admin.get_default_org_role_names(prj_name) %}
 
-/** CREATE USERS and ASSIGN them the ORG ROLES */ 
-  USE ROLE USERADMIN;
+    /** CREATE USERS and ASSIGN them the ORG ROLES */ 
+    USE ROLE {{useradmin_role}};
 
-    {{ sf_project_admin.setup_dbt_user(prj_name, users_dict) }}
+    {{ sf_project_admin.setup_dbt_user(
+        dbt_executor_role_name = executor_role_name,
+        dbt_executor_user_name = users_dict.dbt_executor,
+        initial_dbt_executor_pw = var('initial_dbt_executor_pw', 'Ch4ng3.M3'),
+        default_wh_name = sf_project_admin.get_warehouse_name(prj_name, env_name = none),
+        default_db_name = sf_project_admin.get_db_name(prj_name, var('dev_env_names')[0])
+    ) }}
 
-    {{ sf_project_admin.setup_developer_users(prj_name, users_dict) }}
+    {{ sf_project_admin.setup_users_for_role(developer_role_name, users_dict.developers) }}
 
-    {{ sf_project_admin.setup_reader_users(prj_name, users_dict) }}
+    {{ sf_project_admin.setup_users_for_role(reader_role_name, users_dict.readers) }}
 
-    {{ sf_project_admin.drop_users(users_dict) }}
+    {{ sf_project_admin.drop_users(users_dict.users_to_delete) }}
 
 {%- endmacro %}
 
 ------------------------------------------------------------------------------------
 
-{% macro setup_dbt_user(prj_name, users_dict) -%}
+{% macro setup_dbt_user(
+    dbt_executor_role_name,
+    dbt_executor_user_name,
+    initial_dbt_executor_pw,
+    default_wh_name,
+    default_db_name
+) -%}
 
-  {%- set (executor_role_name, developer_role_name, reader_role_name) = sf_project_admin.get_default_org_role_names(prj_name) %}
-  {%- set wh_name = sf_project_admin.get_warehouse_name(prj_name, env_name = none) %}
-  {%- set dev_db_name = sf_project_admin.get_db_name(prj_name, env_name = 'DEV') %}
+  {% if not dbt_executor_user_name %}{% do return('') %}{% endif %}
 
-  {% set dbt_executor = users_dict.dbt_executor %}
-  {% if not dbt_executor %}{% do return('') %}{% endif %}
-
-  CREATE USER IF NOT EXISTS  "{{dbt_executor}}" 
+  CREATE USER IF NOT EXISTS "{{dbt_executor_user_name}}" 
       COMMENT = 'User running DBT commands in the project'
-      PASSWORD = '{{ env_var("DBT_EXECUTOR_PW") }}'
+      PASSWORD = '{{ initial_dbt_executor_pw }}'
       MUST_CHANGE_PASSWORD = TRUE 
-      DEFAULT_ROLE = '{{executor_role_name}}'
-      DEFAULT_WAREHOUSE = '{{wh_name}}'
-      DEFAULT_NAMESPACE = '{{dev_db_name}}'
+      DEFAULT_ROLE = '{{dbt_executor_role_name}}'
+      DEFAULT_WAREHOUSE = '{{default_wh_name}}'
+      DEFAULT_NAMESPACE = '{{default_db_name}}'
   ;
 
   GRANT ROLE {{executor_role_name}} TO USER  "{{dbt_executor}}" ; 
@@ -39,43 +60,17 @@
 
 ------------------------------------------------------------------------------------
 
-{% macro setup_developer_users(prj_name, users_dict) -%}
+{% macro setup_users_for_role(role_name, user_list) -%}
+  {% if not role_name or user_list|length == 0  %}{% do return('') %}{% endif %}
 
-  {%- set (executor_role_name, developer_role_name, reader_role_name) = sf_project_admin.get_default_org_role_names(prj_name) %}
-  {%- set wh_name = sf_project_admin.get_warehouse_name(prj_name, env_name = none) %}
-  {%- set dev_db_name = sf_project_admin.get_db_name(prj_name, env_name = 'DEV') %}
-
-  {% set developers = users_dict.developers %}
-  {% if not developers %}{% do return('') %}{% endif %}
-
-  {%- for user_name in developers %}
-    GRANT ROLE {{developer_role_name}} TO USER "{{user_name}}";
-  {%- endfor %}    
-    ---------------------------------------------------------
-
-{%- endmacro %}
-
-------------------------------------------------------------------------------------
-
-{% macro setup_reader_users(prj_name, users_dict) -%}
-
-  {%- set (executor_role_name, developer_role_name, reader_role_name) = sf_project_admin.get_default_org_role_names(prj_name) %}
-  {%- set wh_name = sf_project_admin.get_warehouse_name(prj_name, env_name = none) %}
-  {%- set prod_db_name = sf_project_admin.get_db_name(prj_name, env_name = 'PROD') %}
-
-  {% set readers = users_dict.readers %}
-  {% if not readers %}{% do return('') %}{% endif %}
-
-  {%- for user_name in readers %}
-      GRANT ROLE {{reader_role_name}} TO USER "{{user_name}}";
+  {%- for user_name in user_list %}
+      GRANT ROLE {{role_name}} TO USER "{{user_name}}";
   {%- endfor %}
 {%- endmacro %}
 
 ------------------------------------------------------------------------------------
 
-{% macro drop_users(users_dict) -%}
-
-  {% set users_to_delete = users_dict.users_to_delete %}
+{% macro drop_users(users_to_delete) -%}
   {% if not users_to_delete %}{% do return('') %}{% endif %}
 
   {%- for user_name in users_to_delete -%}
@@ -91,18 +86,8 @@
 {% macro setup_other_users(prj_name, users_dict) -%}
     {%- for role in users_dict -%}
         {% if role not in ['dbt_executor', 'developers', 'readers', 'users_to_delete'] %}
-
-        -- SET UP users for ROLE {{role}}
-        {{ setup_users_for_role(role, users_dict) }}
-
+        {{ setup_users_for_role(role, users_dict[role]) }}
         {% endif %}
-    {%- endfor %}
-{%- endmacro %}
-
-{% macro setup_users_for_role(role, users_dict) -%}
-    {%- set user_list = users_dict[role] %}
-    {%- for user_name in user_list %}
-        GRANT ROLE {{role}} TO USER "{{user_name}}";
     {%- endfor %}
 {%- endmacro %}
 

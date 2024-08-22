@@ -48,6 +48,9 @@ vars:
   # dev_env_names - a list of environment to be considered at "DEVELOPMENT" level, where DEVELOPER role have read/write privileges
   #                 In "NON DEVELOPMENT" environments the DEVELOPER role has only read privileges
 
+  initial_dbt_executor_pw: Ch4ng3.M3    # "{#{ env_var("DBT_EXECUTOR_PW") }#}"
+  # initial_dbt_executor_pw - The initial password to assign to the executor user when created. 
+  #                         - While it MUST be changed, it should come from ENV vars and not a string here.
 
 # Configuring models - Full documentation: https://docs.getdbt.com/docs/configuring-models
 models:

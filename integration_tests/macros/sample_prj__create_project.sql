@@ -16,9 +16,10 @@
     {%- set creator_role = 'SOME_CREATOR' -%}
     {%- set useradmin_role = 'SOME_USERADMIN' -%}
 
-    /* == Create ONE WAREHOUSE for all envs => pass NO env name == */
-    {#{ sf_project_admin.create_warehouse(prj_name, env_name, owner_role, creator_role) }#}
+    /* == Create ONE WAREHOUSE for ALL envs => pass NO env name == */
     {{- sf_project_admin.create_warehouse(prj_name) }}
+    /* == Create ONE WAREHOUSE for EACH env => put in ENV loop + pass the env name == */
+    {#{ sf_project_admin.create_warehouse(prj_name, env_name, owner_role, creator_role) }#}
 
     /* == Create ALL environments, one at a time == */
     {%- for env_name in environments %}
@@ -29,6 +30,6 @@
     /* == Setup ORGANIZATIONAL ROLES == */
     {{ sf_project_admin.create_default_org_roles(prj_name, environments, owner_role, useradmin_role) }}
 
-    /* == TO Create and Setup USERS => go to sample__user_lists and run refresh_user_roles___sample_project()  == */
+    /* == TO Create and Setup USERS => go to sample_prj__manage_users and run refresh_user_roles___XXXX_project()  == */
 
 {%- endmacro %}
