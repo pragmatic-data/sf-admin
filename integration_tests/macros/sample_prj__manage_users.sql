@@ -3,7 +3,16 @@
     {% do log("Refreshing user roles for XXXXX project ", info=True) %}
     {%- set prj_name = 'SAMPLE' -%}
     {%- set useradmin_role = 'SOME_USERADMIN' -%}
+    
+    /* 1 Create users - Uncomment if you want users to be created from the YAML definition */
+    {#% do run_query( XXXcreate_usersXXX( prj_name, get_XXXXX_user_dictionary(), useradmin_role) ) %#}
+    
+    /* 2 Assign default roles to users  */
     {% do run_query( setup_users( prj_name, get_XXXXX_user_dictionary(), useradmin_role) ) %}
+
+    /* 3 Assign default roles to users  */
+    {% do run_query( setup_other_users(prj_name, get_XXXXX_user_dictionary()) ) %}
+    
     {% do log("Refreshed user roles for XXXXX project ", info=True) %}
 {% endif %}{%- endmacro %}
 
