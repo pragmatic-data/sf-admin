@@ -1,9 +1,13 @@
+/* ** SAMPLE Dictionary **
+XXXXX_ROLE:                                    # Role to be granted:
+    - XXX_SCHEMA_NAME: ['QA', 'PROD']          #   - Schema name: [list of envs to grant access to]
+*/
 
 {% macro grant_mart_access__sql(
-        prj_name, 
-        role_dict, 
-        sysadmin_root_role = 'SYSADMIN'
-    ) %}
+    prj_name,
+    role_dict,
+    sysadmin_root_role = 'SYSADMIN'
+) %}
 
 USE ROLE {{sysadmin_root_role}};
 
