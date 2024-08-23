@@ -1,6 +1,6 @@
 /* ** SAMPLE Dictionary **
-XXXXX_ROLE:                                    # Role to be granted:
-    - XXX_SCHEMA_NAME: ['QA', 'PROD']          #   - Schema name: [list of envs to grant access to]
+XXXXX_ROLE:                                    # Role to be granted RO access to the listed resources:
+    - XXX_SCHEMA_NAME: ['QA', 'PROD']          #   - Schema name to grant access to: [list of envs to grant access to]
 */
 
 {% macro grant_mart_access__sql(
