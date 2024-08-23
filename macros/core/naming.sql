@@ -12,6 +12,18 @@
 
 ----------------------------------------
 
+{% macro get_warehouse_name(prj_name, env_name = none, single_WH = false) -%}
+
+  {%- if env_name and not single_WH -%} 
+      {% do return(prj_name ~ '_' ~ env_name ~ '_WH') %}
+  {%- else -%}
+      {% do return(prj_name ~ '_WH') %}
+  {%- endif -%}
+
+{%- endmacro %}
+
+----------------------------------------
+
 {% macro get_role_name(prj_name, env_name, suffix) -%}
 {% do return(prj_name ~ '_' ~ env_name ~ '_' ~ suffix) %}
 {%- endmacro %}
