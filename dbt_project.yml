@@ -55,6 +55,14 @@ vars:
   reporting_wh: REPORTING_WH
   # reporting_wh - an example of extra warehouse
 
+  dev_env_names: ['DEV']
+  # dev_env_names - a list of environment to be considered at "DEVELOPMENT" level, where DEVELOPER role have read/write privileges
+  #                 In "NON DEVELOPMENT" environments the DEVELOPER role has only read privileges
+
+  initial_pw: "{{ env_var('DBT_ENV_SECRET_INITIAL_PW', 'Ch4ng3.ME') }}"
+  # initial_pw - The initial password to assign to users when created. 
+  #            - While it MUST be changed after the user creation, it better come from ENV vars and not the string here.
+
 
 models:
   sf_project_admin:

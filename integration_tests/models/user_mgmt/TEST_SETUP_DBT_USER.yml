@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: TEST_SETUP_DBT_USER
+    data_tests:
+      - dbt_utils.expression_is_true:
+          expression: "CONTAINS(UPPER(result), UPPER(validate_user_name))"      

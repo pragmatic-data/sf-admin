@@ -1,0 +1,9 @@
+version: 2
+
+models:
+  - name: TEST_DROP_USERS
+    data_tests:
+      - dbt_utils.expression_is_true:
+          expression: "CONTAINS(UPPER(result), UPPER(validate_user1))"      
+      - dbt_utils.expression_is_true:
+          expression: "CONTAINS(UPPER(result), UPPER(validate_user2))"      
