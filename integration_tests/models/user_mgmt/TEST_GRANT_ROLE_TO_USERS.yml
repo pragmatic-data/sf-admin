@@ -1,7 +1,7 @@
 version: 2
 
 models:
-  - name: TEST_SETUP_USERS_FOR_ROLE
+  - name: TEST_GRANT_ROLE_TO_USERS
     data_tests:
       - dbt_utils.expression_is_true:
           expression: "CONTAINS(UPPER(result), UPPER(validate_user1))"      

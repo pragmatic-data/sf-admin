@@ -39,7 +39,7 @@ use_case_01 as (
     SELECT 
     '{{role_name}}' as initial_dbt_executor_pw, 
     '{{ user_list | replace("'", "\\'") }}' as user_list,
-    '{{ sf_project_admin.setup_users_for_role(role_name, user_list)|e }}' as result,
+    '{{ sf_project_admin.grant_role_to_users(role_name, user_list)|e }}' as result,
 
     '{{'GRANT ROLE SAMPLE_DEVELOPER TO USER "ROBERTO_ZAGNI_ADMIN";'|e }}' as validate_user1, 
     '{{'GRANT ROLE SAMPLE_DEVELOPER TO USER "ROBERTO_ZAGNI_DEVELOPER";'|e }}' as validate_user2, 
@@ -52,7 +52,7 @@ use_case_01 as (
     SELECT 
     '{{role_name}}' as initial_dbt_executor_pw, 
     '{{ user_list | replace("'", "\\'") }}' as user_list,
-    '{{ sf_project_admin.setup_users_for_role(role_name, user_list)|e }}' as result,
+    '{{ sf_project_admin.grant_role_to_users(role_name, user_list)|e }}' as result,
 
     '{{'GRANT ROLE SAMPLE_READER TO USER "POWERBI_READER";'|e }}' as validate_user1, 
     '{{'GRANT ROLE SAMPLE_READER TO USER "READER@COMPAY.COM";'|e }}' as validate_user2, 
@@ -65,7 +65,7 @@ use_case_01 as (
     SELECT 
     '{{role_name}}' as initial_dbt_executor_pw, 
     '{{ user_list | replace("'", "\\'") }}' as user_list,
-    '{{ sf_project_admin.setup_users_for_role(role_name, user_list)|e }}' as result,
+    '{{ sf_project_admin.grant_role_to_users(role_name, user_list)|e }}' as result,
 
     '{{'GRANT ROLE AI_TEAM_ROLE TO USER "AI_GUY@COMPANY.COM";'|e }}' as validate_user1, 
     '{{'GRANT ROLE AI_TEAM_ROLE TO USER "AI_TEAM_SERVICE_USER";'|e }}' as validate_user2, 
@@ -78,7 +78,7 @@ use_case_01 as (
     SELECT 
     '{{role_name}}' as initial_dbt_executor_pw, 
     '{{ user_list | replace("'", "\\'") }}' as user_list,
-    '{{ sf_project_admin.setup_users_for_role(role_name, user_list)|e }}' as result,
+    '{{ sf_project_admin.grant_role_to_users(role_name, user_list)|e }}' as result,
 
     '{{'GRANT ROLE FINANCE_TEAM_ROLE TO USER "FINANCE_GUY@COMPANY.COM";'|e }}' as validate_user1, 
     '' as validate_user2, 

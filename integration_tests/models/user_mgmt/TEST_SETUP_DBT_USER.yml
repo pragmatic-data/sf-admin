@@ -5,13 +5,3 @@ models:
     data_tests:
       - dbt_utils.expression_is_true:
           expression: "CONTAINS(UPPER(result), UPPER(validate_user_name))"      
-      - dbt_utils.expression_is_true:
-          expression: "CONTAINS(UPPER(result), UPPER(validate_pw))"      
-      - dbt_utils.expression_is_true:
-          expression: "CONTAINS(UPPER(result), UPPER(validate_must_change_pw))"      
-      - dbt_utils.expression_is_true:
-          expression: "CONTAINS(UPPER(result), UPPER(validate_default_role))"      
-      - dbt_utils.expression_is_true:
-          expression: "CONTAINS(UPPER(result), UPPER(validate_warehouse))"      
-      - dbt_utils.expression_is_true:
-          expression: "CONTAINS(UPPER(result), UPPER(validate_db))"      

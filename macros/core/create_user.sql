@@ -25,6 +25,4 @@
         {% if default_db_name %}DEFAULT_NAMESPACE = '{{default_db_name}}'{% endif %}
     ;
 
-    GRANT ROLE {{executor_role_name}} TO USER  "{{dbt_executor}}" ; 
-
 {%- endmacro %}
