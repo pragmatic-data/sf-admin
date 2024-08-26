@@ -34,5 +34,5 @@ FINANCE_TEAM_ROLE:
     {% do run_query( sf_project_admin.create_mart_roles__sql(get_XXXXX_mart_dictionary(), owner_role, useradmin_role) ) %}
     {% do run_query( sf_project_admin.grant_mart_access__sql( prj_name, get_XXXXX_mart_dictionary(), owner_role) ) %}
 
-    {% do log("Refreshed user roles for XXXXX project ", info=True) %}
+    {% do log("Configured data mart access for XXXXX project ", info=True) %}
 {% endif %}{%- endmacro %}
