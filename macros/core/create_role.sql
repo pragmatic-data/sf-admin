@@ -3,7 +3,7 @@
                     , useradmin_role = var('useradmin_role', 'USERADMIN')
 ) -%}
 
-  {%- do log("*+  Creating role " ~ role_name, info=True) -%}
+  {%- do log("*+  Creating role " ~ role_name, info=True) %}
 
   USE ROLE {{useradmin_role}};
 

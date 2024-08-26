@@ -1,0 +1,22 @@
+version: 2
+
+models:
+  - name: TEST_CREATE_MART_ROLES
+    data_tests:
+      - dbt_utils.expression_is_true:
+          expression: "CONTAINS(UPPER(result), UPPER(validate_useradmin_role))"      
+
+      - dbt_utils.expression_is_true:
+          expression: "CONTAINS(UPPER(result), UPPER(validate_xxx_role_creation))"      
+      - dbt_utils.expression_is_true:
+          expression: "CONTAINS(UPPER(result), UPPER(validate_grant_xxx_to_owner_role))"      
+
+      - dbt_utils.expression_is_true:
+          expression: "CONTAINS(UPPER(result), UPPER(validate_ai_role_creation))"      
+      - dbt_utils.expression_is_true:
+          expression: "CONTAINS(UPPER(result), UPPER(validate_grant_ai_to_owner_role))"      
+
+      - dbt_utils.expression_is_true:
+          expression: "CONTAINS(UPPER(result), UPPER(validate_fin_role_creation))"      
+      - dbt_utils.expression_is_true:
+          expression: "CONTAINS(UPPER(result), UPPER(validate_grant_fin_to_owner_role))"      

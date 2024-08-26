@@ -47,6 +47,11 @@ vars:
   # owner_role - the role who will get ownership of the created object - no privileges needed 
   #            - usually the EXECUTOR role for the dbt user, so that it can create schemata & other objects inside
   
+  single_WH: True
+  # single_WH - Wheter to create and use a single WH for all environments, if true, or one for each environment, if false.
+  #           - Warehouse naming is controlled by the get_warehouse_name(...) macro where single_WH is a parameter to control 
+  #           - the name generation.
+
   shared_dev_wh: SHARED_DEV_WH
   # shared_dev_wh - the shared development warehouse to assign to developers in addition to the project warehouse
   #                 The idea is that it is more cost efficient for many developers to share a single DEV WH

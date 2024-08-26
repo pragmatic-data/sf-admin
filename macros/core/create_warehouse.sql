@@ -3,14 +3,15 @@
                         , env_name = none
                         , owner_role = none
                         , creator_role = none
+                        , single_WH = none
                           ) -%}
     {% set creator_role = creator_role or var('creator_role', 'SYSADMIN') %}
     {% set owner_role = owner_role or var('owner_role', 'SYSADMIN') %}
-    {% set wh_name = sf_project_admin.get_warehouse_name(prj_name, env_name) %}
+    {% set wh_name = sf_project_admin.get_warehouse_name(prj_name, env_name, single_WH) %}
 
     {%- do log("*+  Creating warehouse " ~ wh_name ~ " for project " ~ prj_name ~ ", environment = " ~ env_name, info=True) -%}
 
-    USE ROLE {{creator_role}};
+    USE ROLE {{creator_role}};  -- single_WH = {{single_WH}}
 
     /** 1 Create Warehouse */
     CREATE OR REPLACE WAREHOUSE {{wh_name}} WITH
