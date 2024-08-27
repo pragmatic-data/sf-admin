@@ -1,15 +1,15 @@
 
-{% set (prj_name, mart_dict, owner_role, loop_indexes)
+{% set (prj_name, mart_dict, future_grants_role, loop_indexes)
         =('PROJECT', get_XXXXX_mart_dictionary(), 'SOME_PARENT', []) %}
 WITH
 use_case_01 as (
     SELECT     
     '{{prj_name}}' as prj_name,     
     '{{mart_dict | replace("'", "\\'") }}' as mart_dict,     
-    '{{owner_role}}' as owner_role, 
-    '{{ sf_project_admin.grant_mart_access__sql(prj_name, mart_dict, owner_role) |e }}' as result,
+    '{{future_grants_role}}' as future_grants_role, 
+    '{{ sf_project_admin.grant_mart_access__sql(prj_name, mart_dict, future_grants_role) |e }}' as result,
 
-    'USE ROLE SOME_PARENT;' as validate_owner_role,
+    'USE ROLE SOME_PARENT;' as validate_future_grants_role,
 
     'GRANT USAGE ON WAREHOUSE PROJECT_WH TO ROLE XXXXX_ROLE;' as validate_env_wh,
     'GRANT USAGE ON DATABASE PROJECT_QA TO ROLE XXXXX_ROLE;' as validate_env_db,
@@ -21,10 +21,10 @@ use_case_01 as (
     SELECT     
     '{{prj_name}}' as prj_name,     
     '{{mart_dict | replace("'", "\\'") }}' as mart_dict,     
-    '{{owner_role}}' as owner_role, 
-    '{{ sf_project_admin.grant_mart_access__sql(prj_name, mart_dict, owner_role) |e }}' as result,
+    '{{future_grants_role}}' as future_grants_role, 
+    '{{ sf_project_admin.grant_mart_access__sql(prj_name, mart_dict, future_grants_role) |e }}' as result,
 
-    'USE ROLE SOME_PARENT;' as validate_owner_role,
+    'USE ROLE SOME_PARENT;' as validate_future_grants_role,
 
     'GRANT USAGE ON WAREHOUSE PROJECT_WH TO ROLE XXXXX_ROLE;' as validate_env_wh,
     'GRANT USAGE ON DATABASE PROJECT_PROD TO ROLE XXXXX_ROLE;' as validate_env_db,
@@ -36,10 +36,10 @@ use_case_01 as (
     SELECT     
     '{{prj_name}}' as prj_name,     
     '{{mart_dict | replace("'", "\\'") }}' as mart_dict,     
-    '{{owner_role}}' as owner_role, 
-    '{{ sf_project_admin.grant_mart_access__sql(prj_name, mart_dict, owner_role) |e }}' as result,
+    '{{future_grants_role}}' as future_grants_role, 
+    '{{ sf_project_admin.grant_mart_access__sql(prj_name, mart_dict, future_grants_role) |e }}' as result,
 
-    'USE ROLE SOME_PARENT;' as validate_owner_role,
+    'USE ROLE SOME_PARENT;' as validate_future_grants_role,
     'GRANT USAGE ON WAREHOUSE PROJECT_WH TO ROLE AI_TEAM_ROLE;' as validate_env_wh,
     'GRANT USAGE ON DATABASE PROJECT_PROD TO ROLE AI_TEAM_ROLE;' as validate_env_db,
     'GRANT USAGE ON SCHEMA PROJECT_PROD.PRJ_MART_AI_TEAM TO ROLE AI_TEAM_ROLE;' as validate_env_schema,

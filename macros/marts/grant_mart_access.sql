@@ -6,13 +6,12 @@ XXXXX_ROLE:                                    # Role to be granted RO access to
 {% macro grant_mart_access__sql(
     prj_name,
     role_dict,
-    owner_role = none, 
+    future_grants_role = var('future_grants_role', 'SECURITYADMIN'), 
     single_WH = none
 ) %}
-{%- set owner_role = owner_role or var('owner_role', 'SYSADMIN') %}
 {%- set single_WH = single_WH or var('single_WH', false) %}
 
-USE ROLE {{owner_role}};
+USE ROLE {{future_grants_role}};
 
 {%- for role_to_grant in role_dict -%}
 
