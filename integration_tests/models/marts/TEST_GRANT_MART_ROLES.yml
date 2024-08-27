@@ -4,6 +4,8 @@ models:
   - name: TEST_GRANT_MART_ROLES
     data_tests:
       - dbt_utils.expression_is_true:
+          expression: "CONTAINS(UPPER(result), UPPER(validate_owner_role))"      
+      - dbt_utils.expression_is_true:
           expression: "CONTAINS(UPPER(result), UPPER(validate_future_grants_role))"      
       - dbt_utils.expression_is_true:
           expression: "CONTAINS(UPPER(result), UPPER(validate_env_wh))"      
