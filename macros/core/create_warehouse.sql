@@ -16,7 +16,6 @@
     /** 1 Create Warehouse */
     CREATE OR REPLACE WAREHOUSE {{wh_name}} WITH
         WAREHOUSE_SIZE = XSMALL 
-        SCALING_POLICY = ECONOMY
         AUTO_SUSPEND = 120                -- 120 seconds = 2 minutes
         AUTO_RESUME = TRUE
         INITIALLY_SUSPENDED = TRUE
