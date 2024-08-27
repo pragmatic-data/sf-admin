@@ -90,7 +90,6 @@
   USE ROLE {{owner_role}};
 
   GRANT USAGE ON WAREHOUSE {{wh_name}} TO ROLE {{writer_role_name}};
-  GRANT USAGE ON WAREHOUSE {{ var('shared_dev_wh', 'SHARED_DEV_WH') }} TO ROLE {{writer_role_name}};
 
   GRANT USAGE ON DATABASE {{db_name}} TO ROLE {{writer_role_name}};
   
@@ -98,6 +97,15 @@
   GRANT CREATE SCHEMA ON DATABASE {{db_name}} TO ROLE {{writer_role_name}};
 
   {%- do log("**  Granted to writer role for project " ~ prj_name ~ ", environment = " ~ env_name, info=True) -%}
+{%- endmacro %}
+
+----------------------------------------
+
+{% macro grant_shared_wh_to_writer_role(prj_name, env_name, owner_role, shared_dev_wh = none ) -%}
+    {%- set writer_role_name = sf_project_admin.get_writer_name(prj_name, env_name) %}
+    {% set shared_dev_wh = shared_dev_wh or var('shared_dev_wh', 'SHARED_DEV_WH') %}
+    USE ROLE {{owner_role}};
+    GRANT USAGE ON WAREHOUSE {{ shared_dev_wh }} TO ROLE {{writer_role_name}};
 {%- endmacro %}
 
 ----------------------------------------
