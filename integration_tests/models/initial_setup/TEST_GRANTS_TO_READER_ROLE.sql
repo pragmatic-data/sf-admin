@@ -1,13 +1,14 @@
 WITH
 use_case_01 as (
-    {% set (prj_name,  env_name, owner_role, single_WH)
-          =('SAMPLE', 'XDEV', 'SOME_OWNER', true) %}
+    {% set (prj_name,  env_name, owner_role, future_grants_role, single_WH)
+          =('SAMPLE', 'XDEV', 'SOME_OWNER', 'SOME_SECURITYADMIN', true) %}
     SELECT 
     '{{prj_name}}' as prj_name, 
     '{{env_name}}' as env_name, 
     '{{owner_role}}' as owner_role, 
+    '{{future_grants_role}}' as future_grants_role, 
     '{{single_WH}}' as single_WH,     
-    '{{ sf_project_admin.grants_to_reader_role(prj_name, env_name, owner_role, single_WH) |e }}' as result,
+    '{{ sf_project_admin.grants_to_reader_role(prj_name, env_name, owner_role, future_grants_role, single_WH) |e }}' as result,
 
     'USE ROLE SOME_OWNER;' as validate_owner_role,    
     'GRANT USAGE ON WAREHOUSE SAMPLE_WH TO ROLE SAMPLE_XDEV_RO;' as validate_usage_on_prj_wh,

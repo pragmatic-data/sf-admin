@@ -17,3 +17,5 @@ models:
           expression: "CONTAINS(UPPER(result), UPPER(validate_creator_role))"      
       - dbt_utils.expression_is_true:
           expression: "CONTAINS(UPPER(result), UPPER(validate_useradmin_role))"      
+      - dbt_utils.expression_is_true:
+          expression: "CONTAINS(UPPER(result), UPPER(validate_future_grants))"      
