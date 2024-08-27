@@ -12,13 +12,14 @@
 
 ----------------------------------------
 
-{% macro get_warehouse_name(prj_name, env_name = none, single_WH = false) -%}
+{% macro get_warehouse_name(prj_name, env_name = none, single_WH = none) -%}
+    {%- set single_WH = single_WH if (single_WH == False or single_WH == True) else var('single_WH', true) %}
 
-  {%- if env_name and not single_WH -%} 
-      {% do return(prj_name ~ '_' ~ env_name ~ '_WH') %}
-  {%- else -%}
-      {% do return(prj_name ~ '_WH') %}
-  {%- endif -%}
+    {%- if env_name and (not single_WH) -%} 
+        {% do return(prj_name ~ '_' ~ env_name ~ '_WH') %}
+    {%- else -%}
+        {% do return(prj_name ~ '_WH') %}
+    {%- endif -%}
 
 {%- endmacro %}
 
