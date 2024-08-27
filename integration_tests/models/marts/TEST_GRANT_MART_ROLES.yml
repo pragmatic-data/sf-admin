@@ -6,6 +6,8 @@ models:
       - dbt_utils.expression_is_true:
           expression: "CONTAINS(UPPER(result), UPPER(validate_owner_role))"      
       - dbt_utils.expression_is_true:
+          expression: "CONTAINS(UPPER(result), UPPER(validate_future_grants_role))"      
+      - dbt_utils.expression_is_true:
           expression: "CONTAINS(UPPER(result), UPPER(validate_env_wh))"      
       - dbt_utils.expression_is_true:
           expression: "CONTAINS(UPPER(result), UPPER(validate_env_db))"      

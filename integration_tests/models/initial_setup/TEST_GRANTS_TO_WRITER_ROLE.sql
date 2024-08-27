@@ -11,7 +11,6 @@ use_case_01 as (
 
     'USE ROLE SOME_OWNER;' as validate_owner_role,    
     'GRANT USAGE ON WAREHOUSE SAMPLE_WH TO ROLE SAMPLE_XDEV_RW;' as validate_usage_on_prj_wh,
-    'GRANT USAGE ON WAREHOUSE TEST_SHARED_DEV_WH TO ROLE SAMPLE_XDEV_RW;' as validate_usage_on_dev_wh,
     'GRANT USAGE ON DATABASE SAMPLE_XDEV TO ROLE SAMPLE_XDEV_RW;' as validate_usage_on_env_db,
     'GRANT OWNERSHIP ON ALL SCHEMAS IN DATABASE SAMPLE_XDEV TO ROLE SAMPLE_XDEV_RW;' as validate_ownership_on_env_db_schemata,
     'GRANT CREATE SCHEMA ON DATABASE SAMPLE_XDEV TO ROLE SAMPLE_XDEV_RW;' as validate_create_schema_on_env_db

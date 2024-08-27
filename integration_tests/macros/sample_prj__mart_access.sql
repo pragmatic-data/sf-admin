@@ -30,9 +30,10 @@ FINANCE_TEAM_ROLE:
     {%- set prj_name = 'SAMPLE' -%}
     {%- set owner_role = 'SOME_OWNER' -%}
     {%- set useradmin_role = 'SOME_USERADMIN' -%}
+    {%- set future_grants_role = 'SECURITYADMIN' -%}
     
     {% do run_query( sf_project_admin.create_mart_roles__sql(get_XXXXX_mart_dictionary(), owner_role, useradmin_role) ) %}
-    {% do run_query( sf_project_admin.grant_mart_access__sql( prj_name, get_XXXXX_mart_dictionary(), owner_role) ) %}
+    {% do run_query( sf_project_admin.grant_mart_access__sql( prj_name, get_XXXXX_mart_dictionary(), owner_role, future_grants_role) ) %}
 
     {% do log("Configured data mart access for XXXXX project ", info=True) %}
 {% endif %}{%- endmacro %}
