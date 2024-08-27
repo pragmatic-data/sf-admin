@@ -8,7 +8,7 @@ use_case_01 as (
     '{{owner_role}}' as owner_role, 
     '{{creator_role}}' as creator_role,     
     '{{single_WH}}' as single_WH,     
-    '{{ sf_project_admin.create_warehouse(prj_name, env_name, owner_role, creator_role, single_WH) |e }}' as result,
+    '{{ sf_project_admin.create_warehouse(prj_name, env_name, single_WH, owner_role, creator_role) |e }}' as result,
 
     'CREATE OR REPLACE WAREHOUSE PROJECT_WH WITH' as validate_wh_name_creation,
     'GRANT OWNERSHIP ON WAREHOUSE PROJECT_WH TO' as validate_wh_name_grant,
@@ -24,7 +24,7 @@ use_case_01 as (
     '{{owner_role}}' as owner_role, 
     '{{creator_role}}' as creator_role,     
     '{{single_WH}}' as single_WH,     
-    '{{ sf_project_admin.create_warehouse(prj_name, env_name, owner_role, creator_role, single_WH) |e }}' as result,
+    '{{ sf_project_admin.create_warehouse(prj_name, env_name, single_WH, owner_role, creator_role) |e }}' as result,
 
     'CREATE OR REPLACE WAREHOUSE PROJECT_DEV_WH WITH' as validate_wh_name_creation,
     'GRANT OWNERSHIP ON WAREHOUSE PROJECT_DEV_WH TO' as validate_wh_name_grant,
@@ -40,7 +40,7 @@ use_case_01 as (
     '{{owner_role}}' as owner_role, 
     '{{creator_role}}' as creator_role,     
     '{{single_WH}}' as single_WH,     
-    '{{ sf_project_admin.create_warehouse(prj_name, env_name, owner_role, creator_role, single_WH) |e }}' as result,
+    '{{ sf_project_admin.create_warehouse(prj_name, env_name, single_WH, owner_role, creator_role) |e }}' as result,
 
     'CREATE OR REPLACE WAREHOUSE PROJECT_WH WITH' as validate_wh_name_creation,
     'GRANT OWNERSHIP ON WAREHOUSE PROJECT_WH TO' as validate_wh_name_grant,
@@ -56,7 +56,7 @@ use_case_01 as (
     '{{owner_role}}' as owner_role, 
     '{{creator_role}}' as creator_role,     
     '{{single_WH}}' as single_WH,     
-    '{{ sf_project_admin.create_warehouse(prj_name, env_name, owner_role, creator_role, single_WH) |e }}' as result,
+    '{{ sf_project_admin.create_warehouse(prj_name, env_name, single_WH, owner_role, creator_role) |e }}' as result,
 
     'CREATE OR REPLACE WAREHOUSE PROJECT_WH WITH' as validate_wh_name_creation,
     'GRANT OWNERSHIP ON WAREHOUSE PROJECT_WH TO' as validate_wh_name_grant,

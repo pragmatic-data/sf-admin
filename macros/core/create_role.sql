@@ -1,4 +1,5 @@
-{% macro create_role( role_name, comment = none
+{% macro create_role( role_name
+                    , comment = none
                     , parent_role = var('owner_role', 'SYSADMIN')
                     , useradmin_role = var('useradmin_role', 'USERADMIN')
 ) -%}

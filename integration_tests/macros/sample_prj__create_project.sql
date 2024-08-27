@@ -16,10 +16,10 @@
     {%- set creator_role = 'SOME_CREATOR' -%}
     {%- set useradmin_role = 'SOME_USERADMIN' -%}
 
-    /* == Create ONE WAREHOUSE for ALL envs => pass NO env name == */
-    {{- sf_project_admin.create_warehouse(prj_name) }}
+    /* == Create ONE WAREHOUSE for ALL envs => pass NO env name or pass/set single_WH to true == */
+    {{- sf_project_admin.create_warehouse(prj_name, single_WH = true) }}
     /* == Create ONE WAREHOUSE for EACH env => put in ENV loop + pass the env name == */
-    {#{ sf_project_admin.create_warehouse(prj_name, env_name, owner_role, creator_role) }#}
+    {#{ sf_project_admin.create_warehouse(prj_name, env_name, owner_role, creator_role, single_WH = false) }#}
 
     /* == Create ALL environments, one at a time == */
     {%- for env_name in environments %}
