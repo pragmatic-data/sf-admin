@@ -11,7 +11,7 @@ use_case_01 as (
     '{{single_WH}}' as single_WH,     
     '{{ sf_project_admin.create_environment(prj_name, env_name, owner_role, creator_role, useradmin_role, single_WH) |e }}' as result,
 
-    'CREATE DATABASE IF NOT EXISTS SAMPLE_XDEV;' as validate_env_db_creation,
+    'CREATE DATABASE IF NOT EXISTS SAMPLE_XDEV' as validate_env_db_creation,
     'CREATE ROLE IF NOT EXISTS SAMPLE_XDEV_RW' as validate_env_RW_role_creation,
     'CREATE ROLE IF NOT EXISTS SAMPLE_XDEV_RO' as validate_env_RO_role_creation,
     'GRANT USAGE ON WAREHOUSE SAMPLE_WH' as validate_single_WH,

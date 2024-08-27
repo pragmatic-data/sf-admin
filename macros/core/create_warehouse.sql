@@ -1,9 +1,9 @@
 
 {% macro create_warehouse(prj_name 
                         , env_name = none
+                        , single_WH = none
                         , owner_role = none
                         , creator_role = none
-                        , single_WH = none
                           ) -%}
     {% set creator_role = creator_role or var('creator_role', 'SYSADMIN') %}
     {% set owner_role = owner_role or var('owner_role', 'SYSADMIN') %}
@@ -11,7 +11,7 @@
 
     {%- do log("*+  Creating warehouse " ~ wh_name ~ " for project " ~ prj_name ~ ", environment = " ~ env_name, info=True) -%}
 
-    USE ROLE {{creator_role}};  -- single_WH = {{single_WH}}
+    USE ROLE {{creator_role}};
 
     /** 1 Create Warehouse */
     CREATE OR REPLACE WAREHOUSE {{wh_name}} WITH

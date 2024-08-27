@@ -27,21 +27,19 @@
 ----------------------------------------
 
 {% macro create_env_database(prj_name, env_name, owner_role, creator_role ) -%}
-  {%- do log("**  Creating database for project " ~ prj_name ~ ", environment = " ~ env_name, info=True) %}
+    {%- do log("**  Creating database for project " ~ prj_name ~ ", environment = " ~ env_name, info=True) %}
 
-  /* ---- create_env_database for {{env_name}} ---- */
-  USE ROLE {{creator_role}};
+    /* ---- create_env_database for {{env_name}} ---- */
 
-  {%- set db_name = sf_project_admin.get_db_name(prj_name, env_name) %}
-  
-  /** 1 ** Create env DB */
-  CREATE DATABASE IF NOT EXISTS {{db_name}};
-  {%- do log("**  Created database " ~ db_name ~ " for project " ~ prj_name ~ ", environment = " ~ env_name, info=True) %}
+    {%- set db_name = sf_project_admin.get_db_name(prj_name, env_name) %}
 
-  /** 2 ** transfer ownership of DB to root SysAdmin role */
-  GRANT OWNERSHIP ON DATABASE {{db_name}} TO ROLE {{owner_role}};
-  {%- do log("**  Assigned ownership of database " ~ db_name ~ " to role " ~ owner_role , info=True) %}
-
+    {{ sf_project_admin.create_database(
+        db_name = db_name, 
+        comment = "Database for the " ~ env_name ~ " environment of the " ~ prj_name ~ " project.",
+        owner_role = owner_role,
+        creator_role = creator_role
+    ) }}
+    {%- do log("**  Created database " ~ db_name ~ " for project " ~ prj_name ~ ", environment = " ~ env_name, info=True) %}
 {%- endmacro %}
 
 ----------------------------------------
