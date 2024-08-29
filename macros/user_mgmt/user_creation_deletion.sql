@@ -100,8 +100,8 @@
 {% macro create_dbt_executor_user(
         prj_name,
         user_name,
-        default_wh_name = none,
-        default_db_name = none,
+        default_wh_name = sf_project_admin.get_warehouse_name(prj_name),
+        default_db_name = sf_project_admin.get_db_name(prj_name, var('dev_env_names', ['DEV'])[0]),
         useradmin_role = var('useradmin_role', 'USERADMIN')    
 ) -%}
 
@@ -115,8 +115,8 @@
         user_name = user_name,
         default_role_name = executor_role_name,
         initial_pw = initial_pw,
-        default_wh_name = sf_project_admin.get_warehouse_name(prj_name),
-        default_db_name = sf_project_admin.get_db_name(prj_name, var('dev_env_names', ['DEV'])[0]),
+        default_wh_name = default_wh_name,
+        default_db_name = default_db_name,
         useradmin_role = useradmin_role
     ) }}
 {%- endmacro %}
