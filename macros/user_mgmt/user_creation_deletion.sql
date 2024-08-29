@@ -17,6 +17,7 @@
 
     /** CREATE dbt Executor User */ 
     {{ sf_project_admin.create_dbt_executor_user(
+            prj_name, 
             user_name,
             default_wh_name = default_wh_name,
             default_db_name = default_db_name,
@@ -97,6 +98,7 @@
 ------------------------------------------------------------------------------------
 
 {% macro create_dbt_executor_user(
+        prj_name,
         user_name,
         default_wh_name = none,
         default_db_name = none,
@@ -110,11 +112,11 @@
 
     /** CREATE dbt Executor User */ 
     {{ sf_project_admin.create_user(
-        user_name = ususer_name,
+        user_name = user_name,
         default_role_name = executor_role_name,
         initial_pw = initial_pw,
-        default_wh_name = default_wh_name,
-        default_db_name = default_db_name,
+        default_wh_name = sf_project_admin.get_warehouse_name(prj_name),
+        default_db_name = sf_project_admin.get_db_name(prj_name, var('dev_env_names', ['DEV'])[0]),
         useradmin_role = useradmin_role
     ) }}
 {%- endmacro %}
