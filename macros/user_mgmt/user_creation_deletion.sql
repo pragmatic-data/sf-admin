@@ -16,13 +16,11 @@
                 = sf_project_admin.get_default_org_role_names(prj_name) %}
 
     /** CREATE dbt Executor User */ 
-    {{ sf_project_admin.create_user(
-        user_name = users_dict.dbt_executor,
-        default_role_name = executor_role_name,
-        initial_pw = initial_pw,
-        default_wh_name = default_wh_name,
-        default_db_name = default_db_name,
-        useradmin_role = useradmin_role
+    {{ sf_project_admin.create_dbt_executor_user(
+            user_name,
+            default_wh_name = default_wh_name,
+            default_db_name = default_db_name,
+            useradmin_role = useradmin_role
     ) }}
 
     /** CREATE Developer Users */ 
@@ -94,4 +92,29 @@
 
   {%- endfor -%}
 
+{%- endmacro %}
+
+------------------------------------------------------------------------------------
+
+{% macro create_dbt_executor_user(
+        user_name,
+        default_wh_name = none,
+        default_db_name = none,
+        useradmin_role = var('useradmin_role', 'USERADMIN')    
+) -%}
+
+    {% set initial_pw = var('initial_dbt_executor_pw', 'Ch4ng3.M3') %}
+    {% set useradmin_role = useradmin_role or var('useradmin_role', 'USERADMIN') %}
+    {%- set (executor_role_name, developer_role_name, reader_role_name) 
+                = sf_project_admin.get_default_org_role_names(prj_name) %}
+
+    /** CREATE dbt Executor User */ 
+    {{ sf_project_admin.create_user(
+        user_name = ususer_name,
+        default_role_name = executor_role_name,
+        initial_pw = initial_pw,
+        default_wh_name = default_wh_name,
+        default_db_name = default_db_name,
+        useradmin_role = useradmin_role
+    ) }}
 {%- endmacro %}
