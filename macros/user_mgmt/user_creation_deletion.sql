@@ -17,8 +17,8 @@
 
     /** CREATE dbt Executor User */ 
     {{ sf_project_admin.create_dbt_executor_user(
-            prj_name, 
-            user_name,
+            prj_name = prj_name, 
+            user_name = users_dict.dbt_executor,
             default_wh_name = default_wh_name,
             default_db_name = default_db_name,
             useradmin_role = useradmin_role
