@@ -78,7 +78,7 @@ FINANCE_TEAM_ROLE:
 {% endif %}{%- endmacro %}
 
 /* == Macro to run the user CREATION as a dbt run-operation == */
-{% macro create_user_roles___XXXXX_project() -%}{% if execute and flags.WHICH in ('run', 'build', 'run-operation') %}
+{% macro create_users___XXXXX_project() -%}{% if execute and flags.WHICH in ('run', 'build', 'run-operation') %}
 
     {%- set prj_name = var('project_short_name', 'XXXXX') -%}
     {%- set useradmin_role = var('useradmin_role', 'USERADMIN') -%}
@@ -95,7 +95,7 @@ FINANCE_TEAM_ROLE:
 {% endif %}{%- endmacro %}
 
 /* == Macro to run the user CREATION as a dbt run-operation == */
-{% macro drop_user_roles___XXXXX_project() -%}{% if execute and flags.WHICH in ('run', 'build', 'run-operation') %}
+{% macro drop_users___XXXXX_project() -%}{% if execute and flags.WHICH in ('run', 'build', 'run-operation') %}
 
     {%- set useradmin_role = var('useradmin_role', 'USERADMIN') -%}
 
