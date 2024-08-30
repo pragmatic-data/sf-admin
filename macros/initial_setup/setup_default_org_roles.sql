@@ -1,10 +1,10 @@
-{% macro create_default_org_roles(prj_name, environments, owner_role = none, useradmin_role = none) -%}
+{% macro setup_default_org_roles(prj_name, environments, owner_role = none, useradmin_role = none) -%}
 
     {%- do log("*+  Creating default org roles for project " ~ prj_name ~ ", environments = " ~ environments, info=True) -%}
     {%- set owner_role = owner_role or var('owner_role', 'SYSADMIN') %}
     {%- set useradmin_role = useradmin_role or var('useradmin_role', 'USERADMIN') %}
 
-    {{ sf_project_admin.do_create_default_org_roles(prj_name, owner_role, useradmin_role) }}
+    {{ sf_project_admin.create_default_org_roles(prj_name, owner_role, useradmin_role) }}
 
     {{ sf_project_admin.grant_to_default_org_roles(prj_name, environments, useradmin_role) }}
 
@@ -13,7 +13,7 @@
 
 -------------------------------------------------------------
 
-{% macro do_create_default_org_roles(prj_name, owner_role, useradmin_role) -%}
+{% macro create_default_org_roles(prj_name, owner_role, useradmin_role) -%}
 
     /** CREATE ORGANIZATIONAL ROLES */ 
     {% set (executor_role_name, developer_role_name, reader_role_name) = sf_project_admin.get_default_org_role_names(prj_name) %}
