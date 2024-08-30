@@ -5,6 +5,8 @@
     default_wh_name = none,
     default_db_name = none
 ) -%}
+    {% if not prj_name or not users_dict %}{% do return('') %}{% endif %}
+
     /** Set defaults if params not passed */ 
     {% set useradmin_role = useradmin_role or var('useradmin_role', 'USERADMIN') %}
     {% set initial_pw = var('initial_dbt_executor_pw', 'Ch4ng3.M3') %}
@@ -66,6 +68,7 @@
     role_name, user_list, 
     initial_pw=none, default_wh_name = none, default_db_name = none, useradmin_role = none
 ) %}
+    {% if not role_name or not user_list %}{% do return('') %}{% endif %}
 
     {% for user_name in user_list %}
         {{ sf_project_admin.create_user(
@@ -77,21 +80,20 @@
             useradmin_role = useradmin_role
         ) }}
     {% endfor %}
-        
 
-    
 {% endmacro %}
 
 ------------------------------------------------------------------------------------
 
-{% macro drop_users(users_to_delete) -%}
-  {% if not users_to_delete %}{% do return('') %}{% endif %}
+{% macro drop_users(
+    users_to_delete,
+    useradmin_role = none
+) -%}
+    {% if not users_to_delete %}{% do return('') %}{% endif %}
 
-  {%- for user_name in users_to_delete -%}
-  
-    DROP USER IF EXISTS "{{user_name}}";
-
-  {%- endfor -%}
+    {%- for user_name in users_to_delete -%}
+        {{ sf_project_admin.drop_user(user_name, useradmin_role) }}
+    {%- endfor -%}
 
 {%- endmacro %}
 
@@ -102,8 +104,9 @@
         user_name,
         default_wh_name = sf_project_admin.get_warehouse_name(prj_name),
         default_db_name = sf_project_admin.get_db_name(prj_name, var('dev_env_names', ['DEV'])[0]),
-        useradmin_role = var('useradmin_role', 'USERADMIN')    
+        useradmin_role = none
 ) -%}
+    {% if not prj_name or not user_name %}{% do return('') %}{% endif %}
 
     {% set initial_pw = var('initial_dbt_executor_pw', 'Ch4ng3.M3') %}
     {% set useradmin_role = useradmin_role or var('useradmin_role', 'USERADMIN') %}

@@ -1,11 +1,13 @@
 {% macro create_database( db_name
                         , comment = none
-                        , owner_role = var('owner_role', 'SYSADMIN')
-                        , creator_role = var('creator_role', 'SYSADMIN')
+                        , owner_role = none
+                        , creator_role = none
 ) -%}
 
-    {%- do log("*+  Creating database " ~ db_name ~ ' ( '~ comment ~' )', info=True) %}
+    {% set creator_role = creator_role or var('creator_role', 'SYSADMIN') %}
+    {% set owner_role = owner_role or var('owner_role', 'SYSADMIN') %}
 
+    {%- do log("*+  Creating database " ~ db_name ~ ' ( '~ comment ~' )', info=True) %}
     /** 1 ** Create the DB with the specified creator role (having Create DB privilege) */
     USE ROLE {{creator_role}};
 

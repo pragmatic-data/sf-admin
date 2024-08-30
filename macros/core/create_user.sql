@@ -4,10 +4,11 @@
     initial_pw = none,
     default_wh_name = none,
     default_db_name = none,
-    useradmin_role = var('useradmin_role', 'USERADMIN')
+    useradmin_role = none
 ) -%}
 
     {% set initial_pw = initial_pw or var('initial_pw', 'Ch4ng3.ME') %}
+    {% set useradmin_role = useradmin_role or var('useradmin_role', 'USERADMIN') %}
 
     {% if not user_name or not default_role_name %}
         {% do log("User name or default role missing, no user created!", info=True) %}

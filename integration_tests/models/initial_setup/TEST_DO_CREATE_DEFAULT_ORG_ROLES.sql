@@ -6,7 +6,7 @@ use_case_01 as (
     '{{prj_name}}' as prj_name, 
     '{{owner_role}}' as owner_role,     
     '{{useradmin_role}}' as useradmin_role,     
-    '{{ sf_project_admin.do_create_default_org_roles(prj_name, owner_role, useradmin_role) |e }}' as result,
+    '{{ sf_project_admin.create_default_org_roles(prj_name, owner_role, useradmin_role) |e }}' as result,
 
     'CREATE ROLE IF NOT EXISTS SAMPLE_DBT_EXECUTOR_ROLE' as validate_executor_role_creation,
     'GRANT ROLE SAMPLE_DBT_EXECUTOR_ROLE TO ROLE SOME_OWNER;' as validate_executor_to_owner_role,
