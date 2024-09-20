@@ -18,6 +18,7 @@
     {%- do log("**  Assigned ownership of database " ~ db_name ~ " to role " ~ owner_role , info=True) %}
     GRANT OWNERSHIP ON DATABASE {{db_name}} TO ROLE {{owner_role}};
     GRANT ALL PRIVILEGES ON DATABASE {{db_name}} TO ROLE {{owner_role}};
+    GRANT OWNERSHIP ON ALL SCHEMAS IN DATABASE {{db_name}} TO ROLE {{owner_role}};
 
     {%- do log("*-  DONE with creating database " ~ db_name, info=True) -%}
 
