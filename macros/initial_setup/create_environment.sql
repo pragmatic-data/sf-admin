@@ -4,7 +4,7 @@
         , owner_role = none
         , creator_role = none
         , useradmin_role = none
-        , future_grants_role = var('future_grants_role', 'SECURITYADMIN')
+        , future_grants_role = var('future_grants_role', none)
         , single_WH = true 
     ) -%}
 

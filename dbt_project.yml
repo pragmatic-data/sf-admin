@@ -37,9 +37,10 @@ clean-targets:         # directories to be removed by `dbt clean`
 
 ### VARIABLES
 vars:
-  project_short_name: XXXXX
-  # project_short_name  - The name used to create the project resources, not the dbt unique project name as in
-  #                     - the first line of this file, available as "project_name" context variable
+  project_short_name: XXXXX   # <<-- Define a short name as a prefix for the resources of your project
+  # project_short_name  - The prefix used to create the project resources (DB, WH, roles...)
+  #                     - This should be a short name that clearly identifies your project and sorts it in the right place as a prefix.
+  #                     - this is not the (unique) dbt project name as in the first line of this file, that is available in the "project_name" context variable
 
   environments: ['DEV', 'QA', 'PROD']
   # environments        - The list of environment names in use in this project
@@ -51,7 +52,13 @@ vars:
   creator_role: SYSADMIN          
   # creator_role - the role used to create databases and warehouses - needs privilege to create these objects
   
-  owner_role: SYSADMIN        # <<-- YOUR_PRJ_SYSADMIN if you want a role
+  future_grants_role: SECURITYADMIN   # <<-- Uncomment/Redefine if you want to be able to grant future grants to RO role.
+  # future_grants_role - the role used to grant future usage and select on DB objects for RO functional roles
+  #                    - these future objects are not granted if no future_grants_role is defined
+  #                    - if you provide a role it must be able to grant future objects and 
+  #                    - the user running the setup script must be able to impersonate it.
+
+  owner_role: SYSADMIN        # <<-- You probably want to override the default with something like YOUR_PRJ_SYSADMIN 
   # owner_role - the role who will get ownership of the created objects for the project and parent of the project roles
   #            - by providing your own role for a project or project group you define a project scoped SYSADMIN
   #            - that can granted to people in the DEV team, even if the full SYSADMIN cannot be granted,

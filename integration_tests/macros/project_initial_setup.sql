@@ -14,10 +14,10 @@
     {#---- If you want to define a value to be used across the full project, copy the variable from the SF Admin package #}
     {#--   into your project's dbt_project.yml file and enter your desired values there. No changes here. #}
 
-    {#---- CONFIGS YOU MIGHT WANT TO CHANGE - Better set in the dbt_project.yml file #}
-    {%- set prj_name = var('project_short_name', 'PRJXX') -%}
-    {%- set environments = var('environments', ['DEV', 'QA', 'PROD']) -%}
-    {%- set owner_role = var('project_short_name', 'PRJXX_SYSADMIN') -%}   {# Default is 'SYSADMIN' #}
+    {#---- CONFIGS YOU MIGHT WANT TO CHANGE by changing the variables in the dbt_project.yml file #}
+    {%- set prj_name = var('project_short_name') -%}
+    {%- set environments = var('environments') -%}
+    {%- set owner_role = var('owner_role') -%}   {# Default is 'SYSADMIN' set in dbt_project.tml file #}
 
     {#---- CONFIGS YOU MIGHT WANT TO LIVE WITH THE DEFAULTS #}
     {%- set creator_role = var('creator_role', 'SYSADMIN') -%}
