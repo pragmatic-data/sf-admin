@@ -17,7 +17,7 @@
     {#---- CONFIGS YOU MIGHT WANT TO CHANGE by changing the variables in the dbt_project.yml file #}
     {%- set prj_name = var('project_short_name') -%}
     {%- set environments = var('environments') -%}
-    {%- set owner_role = var('owner_role') -%}   {# Default is 'SYSADMIN' set in dbt_project.tml file #}
+    {%- set owner_role = var('owner_role') -%}   {# Default is 'SYSADMIN' set in dbt_project.yml file #}
 
     {#---- CONFIGS YOU MIGHT WANT TO LIVE WITH THE DEFAULTS #}
     {%- set creator_role = var('creator_role', 'SYSADMIN') -%}
@@ -56,7 +56,7 @@
         {#---- IF you want to give access to a shared Snowflake warehouse to the Writer roles (to save credits) #}
         {#--   you can use the grant_shared_wh_to_writer_role() macro. #}
         {#--   Provide the name of the owner of the shared warehouse. It might not be this project's owner role. #}
-        {#--   While you can set the name of the shared WH here, it is better done in the dbt_project file. #}
+        {#--   While you can set the name of the shared WH here, it is better done in the dbt_project file with shared_dev_wh. #}
         {{ sf_project_admin.grant_shared_wh_to_writer_role(
             prj_name = prj_name,
             env_name = env_name,
