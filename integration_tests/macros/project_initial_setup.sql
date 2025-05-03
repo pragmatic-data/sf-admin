@@ -55,14 +55,15 @@
         ) }}
         {#---- IF you want to give access to a shared Snowflake warehouse to the Writer roles (to save credits) #}
         {#--   you can use the grant_shared_wh_to_writer_role() macro. #}
-        {#--   Provide the name of the owner of the shared warehouse. It might not be this project's owner role. #}
+        {#--   Provide the name of the owner role of the shared warehouse or of a role which can grant usage on the WH. #}
+        {#--   It might not be this project's owner role. #}
         {#--   While you can set the name of the shared WH here, it is better done in the dbt_project file with shared_dev_wh. #}
-        {{ sf_project_admin.grant_shared_wh_to_writer_role(
+        {#{ sf_project_admin.grant_shared_wh_to_writer_role(
             prj_name = prj_name,
             env_name = env_name,
             owner_role = 'SYSADMIN',
             shared_dev_wh = none
-        ) }}
+        ) }#}
     {%- endfor %}
 
 
