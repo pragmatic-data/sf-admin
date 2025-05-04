@@ -13,8 +13,8 @@
 dbt_executor: XXXXX_DBT_EXECUTOR
 
 developers:
- - ROBERTO_ZAGNI_ADMIN          # high privilege user for interactive access and to run the "Snowflake Admin" project 
- - ROBERTO_ZAGNI_DEVELOPER      # limited privilege user for normal project development tasks
+ - ROBERTO_ZAGNI_ADMIN          # high privilege user for interactive access (SF UI) and to run the "Snowflake Admin" project & scripts
+ - ROBERTO_ZAGNI_DEVELOPER      # limited privilege user for normal dbt project development tasks
  - USER@COMPANY.COM
  - NAME.SURNAME@COMPANY.COM
 
@@ -87,7 +87,7 @@ FINANCE_TEAM_ROLE:
     {% do log("Creating users for "~prj_name~" project ", info=True) %}
     {% do run_query(
         sf_project_admin.create_users_from_dictionary(
-            prj_name, get_STONKS_user_dictionary(), useradmin_role
+            prj_name, get_XXXXX_user_dictionary(), useradmin_role
         )
     ) %}
     {% do log("Created users for "~prj_name~" project ", info=True) %}
@@ -102,7 +102,7 @@ FINANCE_TEAM_ROLE:
     /* Drop users listed for deletion  */
     {% do log("Dropping users marked for deletion for "~prj_name~" project ", info=True) %}
     {% do run_query(
-        sf_project_admin.drop_users(get_STONKS_user_dictionary().users_to_delete, useradmin_role)
+        sf_project_admin.drop_users(get_XXXXX_user_dictionary().users_to_delete, useradmin_role)
     ) %}
     {% do log("Dropped users marked for deletion for "~prj_name~" project ", info=True) %}
 
