@@ -4,11 +4,17 @@
  * This file is used to:
  * - define the name of the DBT executor user to be created
  * - assign SF users to the default roles (Developer or Reader) (the can also be created)
- * - assign SF users to any other existing role
  * - delete SF users that are not needed anymore
+ * - **ADVANCED** assign SF users to any other existing role (role and users need to exist)
  */
 
 {% set users_dict_yaml -%}
+
+## ** CORE Setup **
+## This is the CORE part of the setup, where you can configure the users 
+## to be created (if you run the create_users macro) and asigned to the default roles (by running the refresh macro).
+## You can configure only one user for the dbt_executor role (to create it run the create_dbt_executor_user... macro)
+## and a list of user for the developers or readers roles.
 
 dbt_executor: XXXXX_DBT_EXECUTOR
 
@@ -22,19 +28,27 @@ developers:
 readers:
   - POWERBI_READER
 
-users_to_delete:
-  - SOME_USER_NAME_TO_DROP
+#users_to_delete:                # to actually delete uncomment and run the drop_users macro
+#  - SOME_USER_NAME_TO_DROP
 #  - OTHER_USER_NAME_TO_DROP
 
-SOME_ROLE:                      # An EXISTING role to be assigned to the list of users
- - ROBERTO_ZAGNI_DEVELOPER
 
-AI_TEAM_ROLE:
- - AI_GUY@COMPANY.COM
- - AI_TEAM_SERVICE_USER
+## ** ADVANCED Setup **
+## This is the ADVANCED part of the user setup, where you can leverage the existing scripts to assign existing users to existing roles.
+## You should explicitly create the roles in some other script using the create_role macro, as we already did in the project_initial_setup script.
+## We suggest making a new script file named like new_project_roles.sql with one macro for each new role you want to create.
+## Once you created the role you can configure here to which users to asisgn the role.
+## Here you do not create new users, for that you use the developers or readers lists or you create them explicitly in another macro.
 
-FINANCE_TEAM_ROLE:
- - FINANCE_GUY@COMPANY.COM
+#SOME_ROLE:                      # An EXISTING role to be assigned to the list of users under it
+# - ROBERTO_ZAGNI_DEVELOPER      # An EXISTING user to which the role will be assigned 
+
+#AI_TEAM_ROLE:
+# - AI_GUY@COMPANY.COM
+# - AI_TEAM_SERVICE_USER
+
+#FINANCE_TEAM_ROLE:
+# - FINANCE_GUY@COMPANY.COM
 
 {%- endset %}
 {% do return(fromyaml(users_dict_yaml)) %}
