@@ -13,7 +13,7 @@ to pin to a specific version (suggested):
 ```
   # Snowflake Project Admin package
   - git: https://github.com/pragmatic-data/sf-admin.git
-    revision: 0.1.0
+    revision: 1.0.2
 ```
 
 or the following to stay on the latest, unexpected and unpredictable changes released to 'main' or any other branch you pick:

@@ -92,7 +92,7 @@
 
   GRANT USAGE ON WAREHOUSE {{wh_name}} TO ROLE {{writer_role_name}};
 
-  GRANT USAGE ON DATABASE {{db_name}} TO ROLE {{writer_role_name}};
+  GRANT USAGE ON DATABASE {{db_name}} TO ROLE {{writer_role_name}} WITH GRANT OPTION;
   
   GRANT OWNERSHIP ON ALL SCHEMAS IN DATABASE {{db_name}} TO ROLE {{writer_role_name}};
   GRANT CREATE SCHEMA ON DATABASE {{db_name}} TO ROLE {{writer_role_name}};
